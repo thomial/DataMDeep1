@@ -1,0 +1,106 @@
+{% extends 'home/index.html' %}
+
+{% block title %}
+    {{ post_desc.judul }}
+{% endblock %}
+
+{% block content %}
+    <!--<style>
+        table, td, th {
+            border : 1px solid black;
+            border-collapse: collapse;
+            width: auto;
+        }
+        td, tr, th {
+            padding: 5px;
+        }
+    </style>-->
+    <h1>{{ post_desc.judul }}</h1>
+    <hr>
+    <h5>{{ post_desc.deskripsi }}</h5>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Tabel Data</h2>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped">
+            <tr>
+                <th>Bulan</th>
+                <th>Berat</th>
+                <th>Nilai</th>
+            </tr>
+
+            {% for i in data %}
+                <tr>
+                    <td>{{ i.bulan }}</td>
+                    <td>{{ i.berat }}</td>
+                    <td>{{ i.nilai }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </table>
+        </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h2>Tabel Regresi</h2>
+                    <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>a(nilai)</th>
+                            <th>b(berat)</th>
+                        </tr>
+
+                        <tr>
+                            <td>{{ regkor.hasil_regresi_a }}</td>
+                            <td>{{ regkor.hasil_regresi_b }}</td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+                <div class="col-md-12">
+                    <h2>Korelasi</h2>
+                    {{ regkor.hasil_korelasi }}<br>
+                    <br>
+
+                    <b>Berdasarkan Perhitungan Korelasi Nilai berat Import Tahun {{ tahun }} hubungan antara Nilai Import dan berat Import
+                    {% for i in hasil %}
+                        {{ i }}
+                    {% endfor %}</b>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+                <img src="{% url 'chart' id %}"style="width: 100%">
+
+            </div>
+
+    </div>
+    {% if user.is_authenticated %}
+    <button type="button" style="margin-bottom: 1%" class="btn btn-default" data-toggle="modal" data-target="#myModal">Delete</button>
+    <div class="modal fade" id = "myModal" role="dialog" >
+                <div class="modal-dialog">
+                    <div class = "modal-content" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Apakah Anda Yakin?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apa anda yakin ingin menhapus Data ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-default" href="{% url 'delete' id %}">Ya</a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+{% endblock %}
+
+
